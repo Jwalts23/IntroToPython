@@ -2,13 +2,48 @@
 
 import random
 from guesses import GuessController
+from LED import LED
+import time
 
-gc = GuessController(10)
+#setup LEDs
+red = LED(22)
+yellow = LED(24)
+green = LED(23)
+
+def HWinit():
+    red.setup()
+    yellow.setup()
+    green.setup()
+
+def LEDsOff():
+    red.off()
+    yellow.off()
+    green.off()
+
+#time.sleep(0.5)
+    
+def strobe():
+    red.on()
+    time.sleep(0.25)
+    red.off()
+    time.sleep(0.25)
+    yellow.on()
+    time.sleep(0.25)
+    yellow.off()
+    time.sleep(0.25)
+    green.on()
+    time.sleep(0.25)
+    green.off()
+        
+
+gc = GuessController(15)
 
 # global number, askingToPlayAgain, guessing
 number = random.randint(0,100)
 guessing = True
 askingToPlayAgain = True
+
+HWinit()
 
 def playAgain():
     global askingToPlayAgain, number, guessing
@@ -34,15 +69,20 @@ while guessing:
         
         try:
             guess = int(input("Enter a number between 0-100: "))
+            LEDsOff()
             if not gc.isPreviousGuessTheSame(guess):
                 if guess > number:
                     print("Too High")
+                    red.on()
 
                 elif guess < number:
                     print("Too Low")
+                    yellow.on()
 
                 elif number == guess:
                     print("You did it! The number was " + str(number))
+                    for x in range (5):
+                        strobe()
                     playAgain()
                 gc.recordGuess(guess)
             else:

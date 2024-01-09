@@ -26,11 +26,11 @@ class LED:
         GPIO.output(self.pin, GPIO.HIGH)
         GPIO.cleanup()
 
-led = LED(23)
-if __name__ == '__main__':
-    led.setup()
-    try:
-        led.blink()
-    # When 'Ctrl+C' is pressed, the program destroy() will be  executed.
-    except KeyboardInterrupt:
-        led.destroy()
+# led = LED(23)
+# if __name__ == '__main__':
+#     led.setup()
+#     try:
+#         led.blink()
+#     # When 'Ctrl+C' is pressed, the program destroy() will be  executed.
+#     except KeyboardInterrupt:
+#         led.destroy()
