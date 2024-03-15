@@ -7,7 +7,7 @@ import getopt, sys
 # Remove 1st argument from the
 # list of command line arguments
 argumentList = sys.argv[1:]
-print("arguments list " , argumentList)
+# print("arguments list " , argumentList)
 gc = GuessController(10)
 lowerLimit = 0
 upperLimit = 100
@@ -42,9 +42,10 @@ except getopt.error as err:
 number = random.randint(lowerLimit, upperLimit)
 guessing = True
 askingToPlayAgain = True
+firstTime = True
 
 def playAgain():
-    global askingToPlayAgain, number, guessing
+    global askingToPlayAgain, number, guessing, firstTime
     while(askingToPlayAgain):
         playAgain = input("Would you like to play again?  ")
         if playAgain == "Y" or playAgain == "y":
@@ -67,7 +68,9 @@ while guessing:
         
         try:
             guess = int(input("Enter a number between " + str(lowerLimit) + "-" + str(upperLimit) + ": "))
+            print(guess)
             if not gc.isPreviousGuessTheSame(guess):
+                gc.recordGuess(guess)
                 if guess > number:
                     print("Too High")
 
@@ -76,8 +79,9 @@ while guessing:
 
                 elif number == guess:
                     print("You did it! The number was " + str(number))
+                    askingToPlayAgain = True
                     playAgain()
-                gc.recordGuess(guess)
+
             else:
                 print("The guess cannot be the same as the previous guess")  
         except ValueError as ve:
