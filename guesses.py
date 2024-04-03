@@ -17,6 +17,8 @@ class GuessController:
                     print(g, end=", ")
                 else:
                     print(g)
+        else:
+            print("No Guesses yet")
 
     
     def recordGuess(self, guess):

@@ -71,6 +71,7 @@ while guessing:
             guess = int(input("Enter a number between 0-100: "))
             LEDsOff()
             if not gc.isPreviousGuessTheSame(guess):
+                gc.recordGuess(guess)
                 if guess > number:
                     print("Too High")
                     red.on()
@@ -83,8 +84,9 @@ while guessing:
                     print("You did it! The number was " + str(number))
                     for x in range (5):
                         strobe()
+                    askingToPlayAgain = True
                     playAgain()
-                gc.recordGuess(guess)
+
             else:
                 print("The guess cannot be the same as the previous guess")  
         except ValueError as ve:
